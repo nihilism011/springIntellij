@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <table>
+        <tr>
+          <th>SUBJECT No.</th>
+          <th>SUBJECT Name</th>
+          <th>교슈</th>
+        </tr>
+        <tr v-for="item in emplist" :key="item.EMPNO">
+          <td>{{item.subNo}}</td>
+          <td>{{item.subName}}</td>
+          <td>{{item.subProf}}</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: "app",
+          subList: [],
+          stuList: [],
+        };
+      },
+      methods: {
+        fnGetList() {
+          var self = this;
+          var nparmap = {};
+          $.ajax({
+            url: "subList.dox",
+            dataType: "json",
+            type: "POST",
+            data: nparmap,
+            success: function (data) {
+              console.log(data.subList);
+              self.emplist = data.subList;
+            },
+          });
+        },
+      },
+      mounted() {
+        var self = this;
+        self.fnGetList();
+      },
+    });
+    app.mount("#app");
+  </script>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="/scripts/libs.js" defer></script> -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/css/tblCss.css" />
+    <title>게시판</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        검색 :
+        <input type="text" v-model="keyword" @keyup.enter="fnGetBoardList" />
+        <button @click="fnGetBoardList">검색s</button>
+        <button @click="fnGo">글쓰기</button>
+      </div>
+      <table>
+        <tr>
+          <th>번호</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>조회수</th>
+          <th>작성일</th>
+          <th>수정/삭제</th>
+        </tr>
+        <tr v-for="(item, index) in list" :key="index">
+          <td>{{item.boardNo}}</td>
+          <td>{{item.title}}</td>
+          <td>{{item.userId}}</td>
+          <td>{{item.hit}}</td>
+          <td>{{item.cDateTime}}</td>
+          <td>
+            <button @click="fnDelete(item.boardNo)">삭제</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: "app",
+          list: [],
+          keyword: "",
+        };
+      },
+      methods: {
+        fnGo() {
+          location.href = "/board-insert.do";
+        },
+        async fnGetBoardList() {
+          const url = "/board-list.dox";
+          console.log(this.keyword);
+          try {
+            const response = await axios.post(url, { keyword: this.keyword });
+            this.list = response.data.list;
+          } catch (error) {
+            console.error("Error fetching board list:", error);
+          }
+        },
+        async fnDelete(boardNo) {
+          if (!confirm("정말 삭제 하시겠습니까?")) {
+            return;
+          }
+          const url = "/board-delete.dox";
+          console.log({ boardNo: boardNo });
+          try {
+            const response = await axios.post(url, { boardNo: boardNo });
+            console.log(response.data);
+            alert(response.data.msg);
+            this.fnGetBoardList();
+          } catch (error) {
+            console.error("Error fetching board delete", error);
+          }
+        },
+      },
+      mounted() {
+        this.fnGetBoardList();
+      },
+    });
+    app.mount("#app");
+  </script>
+</html>
