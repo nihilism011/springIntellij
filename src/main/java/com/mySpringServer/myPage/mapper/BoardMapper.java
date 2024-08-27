@@ -11,4 +11,5 @@ public interface BoardMapper {
     List<Board> boardList(HashMap<String,Object> map);
     void deleteBoardItem(HashMap<String,Object> map);
     void insertBoardItem(HashMap<String,Object> map);
+    Board selectBoard(HashMap<String,Object> map);
 }

@@ -17,5 +17,19 @@
         INTO TBL_BOARD(BOARDNO,TITLE,CONTENTS,USERID,HIT,CDATETIME,UDATETIME)
         VALUES (board_seq.nextval ,#{title} , #{contents} , #{userId} , 0 , SYSDATE,SYSDATE)
     </insert>
-
+    <insert id="signUp" parameterType="hashmap">
+        INSERT
+        INTO TBL_USER (USERID,PASSWORD,USERNAME,EMAIL,PHONE,GENDER)
+        VALUES ( #{userId} , #{password} , #{userName} , #{email} , #{phone} , #{gender}  )
+    </insert>
+    <select id="signIn" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.User">
+        SELECT *
+        FROM TBL_USER
+        WHERE USERID = #{userId} AND PASSWORD = #{password}
+    </select>
+    <select id="selectBoard" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.Board">
+        SELECT *
+        FROM TBL_BOARD
+        WHERE BOARDNO = #{boardNo}
+    </select>
 </mapper>

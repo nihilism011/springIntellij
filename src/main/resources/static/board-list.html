@@ -6,14 +6,20 @@
     <!-- <script src="/scripts/libs.js" defer></script> -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="/css/tblCss.css" />
+    <script src="/scripts/jquery.js"></script>
+    <link rel="stylesheet" href="/css/mainCss.css" />
     <title>게시판</title>
   </head>
   <body>
     <div id="app">
       <div>
         검색 :
-        <input type="text" v-model="keyword" @keyup.enter="fnGetBoardList" />
+        <input
+          style="width: 400px"
+          type="text"
+          v-model="keyword"
+          @keyup.enter="fnGetBoardList"
+        />
         <button @click="fnGetBoardList">검색s</button>
         <button @click="fnGo">글쓰기</button>
       </div>
@@ -28,7 +34,9 @@
         </tr>
         <tr v-for="(item, index) in list" :key="index">
           <td>{{item.boardNo}}</td>
-          <td>{{item.title}}</td>
+          <td @click="fnView(item.boardNo)" style="cursor: pointer">
+            {{item.title}}
+          </td>
           <td>{{item.userId}}</td>
           <td>{{item.hit}}</td>
           <td>{{item.cDateTime}}</td>
@@ -76,6 +84,10 @@
           } catch (error) {
             console.error("Error fetching board delete", error);
           }
+        },
+        fnView(boardNo) {
+          location.href = "board-view.do?test=1234";
+          // $.pageChange("board-view.do", { boardNo: boardNo });
         },
       },
       mounted() {

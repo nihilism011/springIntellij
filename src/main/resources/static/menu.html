@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <ol>
+        <li><a href="/board-list.do">게시판 페이지</a></li>
+        <li>
+          <a href="/board-insert.do"
+            >게시판 글쓰기 페이지(게시판 페이지에도 있음)</a
+          >
+        </li>
+        <li><a href="/login.html">로그인 페이지</a></li>
+        <li>
+          <a href="/signUp.html">회원가입 페이지(로그인 페이지에도 있을예정)</a>
+        </li>
+      </ol>
+    </div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: "app",
+        };
+      },
+      methods: {},
+      mounted() {},
+    });
+    app.mount("#app");
+  </script>
+</html>

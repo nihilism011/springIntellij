@@ -1,5 +1,6 @@
 package com.mySpringServer.myPage.dao;
 
+import com.mySpringServer.myPage.model.Board;
 import com.mySpringServer.myPage.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,22 @@ public class BoardServiceImpl implements BoardService {
             resultmap.put("msg","뭔가 뭔가 잘못됨.");
         }
         return resultmap;
+    }
+
+    @Override
+    public HashMap<String, Object> getBoardItem(HashMap<String, Object> map) {
+        HashMap<String, Object> result = new HashMap<>();
+        try{
+            Board selectBoard= boardMapper.selectBoard(map);
+            if(selectBoard != null){
+                result.put("result","success");
+                result.put("boardItem",selectBoard);
+            }else{
+                result.put("result","removed");
+            }
+        }catch (Exception e){
+                result.put("result","fail");
+        }
+        return result;
     }
 }
