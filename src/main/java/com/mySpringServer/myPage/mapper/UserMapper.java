@@ -10,4 +10,5 @@ public interface UserMapper {
 
     void signUp(HashMap<String, Object> map);
     User signIn(HashMap<String, Object> map);
+    User userCheck(HashMap<String, Object> map);
 }

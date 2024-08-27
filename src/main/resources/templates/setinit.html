@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <script src="/scripts/vue.min.js"></script>
+    <script src="/scripts/axios.min.js"></script>
+    <script src="/scripts/jquery.js"></script>
+    <link rel="stylesheet" href="/css/mainCss.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script th:inline="javascript">
+    var initialData = /*[[${initialData}]]*/ {};
+  </script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: "app",
+          initial: initialData,
+        };
+      },
+      methods: {
+        fnTest() {
+          console.log(this.initial);
+        },
+      },
+      mounted() {
+        this.fnTest();
+      },
+    });
+    app.mount("#app");
+  </script>
+</html>

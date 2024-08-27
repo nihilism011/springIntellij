@@ -3,8 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mySpringServer.myPage.mapper.BoardMapper">
     <select id="boardList" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.Board">
-        SELECT *
-        FROM TBL_BOARD
+        SELECT B.*, U.USERNAME
+        FROM TBL_BOARD B
+        INNER JOIN TBL_USER U ON B.USERID = U.USERID
         WHERE TITLE LIKE '%' || #{keyword} || '%'
     </select>
     <delete id="deleteBoardItem" parameterType="hashmap">
@@ -17,19 +18,11 @@
         INTO TBL_BOARD(BOARDNO,TITLE,CONTENTS,USERID,HIT,CDATETIME,UDATETIME)
         VALUES (board_seq.nextval ,#{title} , #{contents} , #{userId} , 0 , SYSDATE,SYSDATE)
     </insert>
-    <insert id="signUp" parameterType="hashmap">
-        INSERT
-        INTO TBL_USER (USERID,PASSWORD,USERNAME,EMAIL,PHONE,GENDER)
-        VALUES ( #{userId} , #{password} , #{userName} , #{email} , #{phone} , #{gender}  )
-    </insert>
-    <select id="signIn" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.User">
-        SELECT *
-        FROM TBL_USER
-        WHERE USERID = #{userId} AND PASSWORD = #{password}
-    </select>
-    <select id="selectBoard" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.Board">
-        SELECT *
-        FROM TBL_BOARD
+
+    <select id="selectBoardItem" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.Board">
+        SELECT B.*, U.USERNAME
+        FROM TBL_BOARD B
+        INNER JOIN TBL_USER U ON B.USERID = U.USERID
         WHERE BOARDNO = #{boardNo}
     </select>
 </mapper>

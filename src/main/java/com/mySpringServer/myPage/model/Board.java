@@ -13,6 +13,7 @@ public class Board {
     private String noticeYn;
     private String cDateTime;
     private String uDateTime;
+    private String userName;
 
 
 }

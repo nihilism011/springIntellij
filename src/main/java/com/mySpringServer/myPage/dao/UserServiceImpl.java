@@ -43,4 +43,23 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public HashMap<String, Object> userCheck(HashMap<String, Object> map) {
+        HashMap<String, Object> result = new HashMap<>();
+        try {
+            User user = userMapper.userCheck(map);
+            result.put("result", "success");
+            if (user == null) {
+                result.put("check", "none");
+                result.put("msg", "사용 가능한 아이디 입니다.");
+            }else {
+                result.put("check", "one");
+                result.put("msg", "이미 사용중인 아이디 입니다.");
+            }
+        }catch (Exception e){
+            result.put("result","fail");
+        }
+        return result;
+    }
 }

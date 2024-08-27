@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <script src="/scripts/vue.min.js"></script>
+    <script src="/scripts/axios.min.js"></script>
+    <script src="/scripts/jquery.js"></script>
+    <link rel="stylesheet" href="/css/mainCss.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>했다 치고</div>
+      <div>{{boardItem}}</div>
+    </div>
+  </body>
+  <script th:inline="javascript">
+    var initialData = /*[[${initialData}]]*/ {};
+  </script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: "app",
+          initial: initialData,
+          boardItem: {},
+        };
+      },
+      methods: {
+        async fnGetBoardItem() {
+          const item = { boardNo: this.initial.boardNo };
+          const url = "board-view.dox";
+          const response = await axios.post(url, item);
+          if (response.data.result == "success") {
+            this.boardItem = response.data.board;
+          } else {
+            alert(response.data.msg);
+            location.href = "/board-list.do";
+          }
+        },
+      },
+      mounted() {
+        this.fnGetBoardItem();
+      },
+    });
+    app.mount("#app");
+  </script>
+</html>

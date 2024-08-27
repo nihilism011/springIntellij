@@ -20,12 +20,13 @@ public class UserController {
 
     @RequestMapping("/login.do")
     public String login(Model model) throws Exception {
-        return "/login.html";
+        return "login";
     }
     @RequestMapping("/join.do")
     public String join(Model model) throws Exception {
-        return "/signUp.html";
+        return "signUp";
     }
+
 
     @RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -41,6 +42,14 @@ public class UserController {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         System.out.println(map);
         resultMap = userService.signUpService(map);
+        return new Gson().toJson(resultMap);
+    }
+    @RequestMapping(value = "/idCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String idCheck(Model model, @RequestBody HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap = userService.userCheck(map);
+        System.out.println(map);
         return new Gson().toJson(resultMap);
     }
 

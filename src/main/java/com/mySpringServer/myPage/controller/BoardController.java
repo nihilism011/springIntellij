@@ -20,16 +20,31 @@ public class BoardController {
     public String boardList(Model model) throws Exception {
         return "/board-list.html";
     }
+    @RequestMapping("/board-login.do")
+    public String aaaa(Model model) throws Exception {
+        return "/board-login.html";
+    }
+    @RequestMapping("/testthyme.do")
+    public String thyme(Model model) throws Exception {
+        // 모델에 데이터 추가가 필요한 경우 추가
+        return "hello";  // "hello" 템플릿을 렌더링합니다.
+    }
+
 
     @RequestMapping("/board-insert.do")
     public String boardInsert(Model model) throws Exception {
         return "/board-insert.html";
     }
-
-    @RequestMapping("/board-view.do")
-    public String boardView(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-        System.out.println(map);
-        return "/board-view.html";
+    //일단 get메소드 사용을 위해
+//    @GetMapping("/board-view.do")
+//    public String boardView(Model model,@RequestParam HashMap<String, Object> map) throws Exception {
+//        System.out.println(map);
+//        return "/board-view.html";
+//    }
+    @PostMapping("/board-view.do")
+    public String boardView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        model.addAttribute("initialData",map);
+        return "board-view";
     }
 
     @RequestMapping(value = "/board-list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

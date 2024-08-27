@@ -37,7 +37,7 @@
           <td @click="fnView(item.boardNo)" style="cursor: pointer">
             {{item.title}}
           </td>
-          <td>{{item.userId}}</td>
+          <td>{{item.userName}}</td>
           <td>{{item.hit}}</td>
           <td>{{item.cDateTime}}</td>
           <td>
@@ -86,8 +86,8 @@
           }
         },
         fnView(boardNo) {
-          location.href = "board-view.do?test=1234";
-          // $.pageChange("board-view.do", { boardNo: boardNo });
+          // location.href = "board-view.do?boardNo=1234";
+          $.pageChange("board-view.do", { boardNo: boardNo });
         },
       },
       mounted() {

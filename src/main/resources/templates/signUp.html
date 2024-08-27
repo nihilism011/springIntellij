@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>user id : <input v-model="userId" @change="isCheck = false" /></div>
+      <button @click="fnIdCheck">중복체크</button>
+    </div>
+  </body>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: "app",
+          userId: "",
+          isCheck: false,
+        };
+      },
+      methods: {
+        async fnIdCheck() {
+          const url = "/idCheck.dox";
+          const response = await axios.post(url, { userId: this.userId });
+          console.log(response.data);
+          if (response.data.result == "success") {
+            if (response.data.check == "none") {
+              this.isCheck = true;
+            }
+            alert(response.data.msg);
+          } else {
+            alert("error");
+          }
+        },
+      },
+      mounted() {},
+    });
+    app.mount("#app");
+  </script>
+</html>

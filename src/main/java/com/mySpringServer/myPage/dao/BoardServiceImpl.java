@@ -38,7 +38,6 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public HashMap<String, Object> addBoardItem(HashMap<String, Object> map) {
         HashMap<String,Object> resultmap = new HashMap<>();
-        System.out.println(map);
         try{
             boardMapper.insertBoardItem(map);
             resultmap.put("result","success");
@@ -54,15 +53,17 @@ public class BoardServiceImpl implements BoardService {
     public HashMap<String, Object> getBoardItem(HashMap<String, Object> map) {
         HashMap<String, Object> result = new HashMap<>();
         try{
-            Board selectBoard= boardMapper.selectBoard(map);
+            Board selectBoard= boardMapper.selectBoardItem(map);
             if(selectBoard != null){
                 result.put("result","success");
-                result.put("boardItem",selectBoard);
+                result.put("board",selectBoard);
             }else{
                 result.put("result","removed");
+                result.put("msg","없는 게시글 입니다.");
             }
         }catch (Exception e){
                 result.put("result","fail");
+                result.put("msg","데이터베이스 오류");
         }
         return result;
     }

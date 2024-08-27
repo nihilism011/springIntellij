@@ -9,6 +9,6 @@ public class MainPageController {
 
     @RequestMapping("/")
     public String boardList(Model model) throws Exception {
-        return "/menu.html";
+        return "index";
     }
 }
