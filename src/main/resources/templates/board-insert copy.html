@@ -6,11 +6,6 @@
     <!-- <script src="/scripts/libs.js" defer></script> -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="/css/mainCss.css" />
     <title>게시판 입력</title>
   </head>
@@ -18,7 +13,7 @@
     <div id="app">
       <div>제목 : <input type="text" placeholder="제목" v-model="title" /></div>
       <div>
-        <div id="editor"></div>
+        내용 : <textarea cols="30" rows="5" v-model="contents"></textarea>
       </div>
       <button @click="fnSave">저장</button>
     </div>
@@ -35,10 +30,11 @@
       },
       methods: {
         async fnSave() {
+          const self = this;
           const input = {
-            title: this.title,
-            contents: this.contents,
-            userId: this.userId,
+            title: self.title,
+            contents: self.contents,
+            userId: self.userId,
           };
           console.log(input);
           const url = "/board-add.dox";
@@ -53,26 +49,7 @@
           }
         },
       },
-      mounted() {
-        // Quill 에디터 초기화
-        var quill = new Quill("#editor", {
-          theme: "snow",
-          modules: {
-            toolbar: [
-              [{ header: [1, 2, 3, 4, 5, 6, false] }],
-              ["bold", "italic", "underline"],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["link", "image"],
-              ["clean"],
-            ],
-          },
-        });
-
-        // 에디터 내용이 변경될 때마다 Vue 데이터를 업데이트
-        quill.on("text-change", () => {
-          this.contents = quill.root.innerHTML;
-        });
-      },
+      mounted() {},
     });
     app.mount("#app");
   </script>

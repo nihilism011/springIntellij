@@ -1,14 +1,14 @@
-package com.mySpringServer.myPage.dao;
+package com.mySpringServer.myPage.dao.board;
 
-import com.mySpringServer.myPage.model.Board;
 import com.mySpringServer.myPage.mapper.BoardMapper;
+import com.mySpringServer.myPage.model.entity.Board;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
 @Service
-public class BoardServiceImpl implements BoardService {
+public class BoardService implements BoardDao {
 
     @Autowired
     BoardMapper boardMapper;

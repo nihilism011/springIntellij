@@ -2,11 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mySpringServer.myPage.mapper.BoardMapper">
-    <select id="boardList" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.Board">
+    <select id="boardList" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.entity.Board">
         SELECT B.*, U.USERNAME
         FROM TBL_BOARD B
         INNER JOIN TBL_USER U ON B.USERID = U.USERID
-        WHERE TITLE LIKE '%' || #{keyword} || '%'
+        WHERE
+        <choose>
+            <when test="searchItem == 'title'">
+                TITLE LIKE '%' || #{keyword} || '%'
+            </when>
+            <when test="searchItem == 'title'">
+                U.USERNAME LIKE '%' || #{keyword} || '%'
+            </when>
+            <otherwise>
+                (TITLE LIKE '%' || #{keyword} || '%' OR USERNAME LIKE '%' || #{keyword} || '%')
+            </otherwise>
+        </choose>
+        <if test="category != 'all' and category != null">
+            AND CATEGORY = #{category}
+        </if>
     </select>
     <delete id="deleteBoardItem" parameterType="hashmap">
         DELETE
@@ -19,7 +33,7 @@
         VALUES (board_seq.nextval ,#{title} , #{contents} , #{userId} , 0 , SYSDATE,SYSDATE)
     </insert>
 
-    <select id="selectBoardItem" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.Board">
+    <select id="selectBoardItem" parameterType="hashmap" resultType="com.mySpringServer.myPage.model.entity.Board">
         SELECT B.*, U.USERNAME
         FROM TBL_BOARD B
         INNER JOIN TBL_USER U ON B.USERID = U.USERID

@@ -1,5 +1,8 @@
-package com.mySpringServer.myPage.model;
+package com.mySpringServer.myPage.model.entity;
 
+import lombok.Data;
+
+@Data
 public class User {
     private String userId;
     private String password;
@@ -7,4 +10,5 @@ public class User {
     private String email;
     private String phone;
     private String gender;
+    private String nickName;
 }

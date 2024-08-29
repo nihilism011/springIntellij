@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/scripts/vue.min.js"></script>
     <script src="/scripts/axios.min.js"></script>
     <script src="/scripts/jquery.js"></script>
@@ -8,27 +10,40 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="app">일단 로그인 페이지 만들것</div>
+    <div id="app">
+      <label for="userId">아이디</label>
+      <input id="userId" type="text" v-model="userInfo.userId" />
+      <label for="password">비밀번호</label>
+      <input
+        id="password"
+        type="text"
+        v-model="userInfo.password"
+        @keyUp.enter="fnLogin"
+      />
+      <button @click="fnLogin">로그인</button>
+    </div>
   </body>
-  <script th:inline="javascript">
-    var initialData = /*[[${initialData}]]*/ {};
-  </script>
   <script>
     const app = Vue.createApp({
       data() {
         return {
           name: "app",
-          initial: initialData,
+          userInfo: { userId: "", password: "" },
         };
       },
       methods: {
-        fnTest() {
-          console.log(this.initial);
+        async fnLogin() {
+          const form = this.userInfo;
+          const url = "login.dox";
+          const response = await axios.post(url, form);
+          console.log(response.data);
+          alert(response.data.result.message);
+          if (response.data.result.status == "success") {
+            location.href = "/board-list.do";
+          }
         },
       },
-      mounted() {
-        this.fnTest();
-      },
+      mounted() {},
     });
     app.mount("#app");
   </script>

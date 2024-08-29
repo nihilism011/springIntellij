@@ -1,6 +1,6 @@
 package com.mySpringServer.myPage.mapper;
 
-import com.mySpringServer.myPage.model.Board;
+import com.mySpringServer.myPage.model.entity.Board;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;

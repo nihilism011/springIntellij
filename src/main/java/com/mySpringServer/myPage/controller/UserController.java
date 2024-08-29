@@ -1,7 +1,7 @@
 package com.mySpringServer.myPage.controller;
 
 import com.google.gson.Gson;
-import com.mySpringServer.myPage.dao.UserService;
+import com.mySpringServer.myPage.dao.user.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserDao userDao;
 
     @RequestMapping("/login.do")
     public String login(Model model) throws Exception {
@@ -26,32 +26,41 @@ public class UserController {
     public String join(Model model) throws Exception {
         return "signUp";
     }
+    @RequestMapping("/user-list.do")
+    public String userList(Model model) throws Exception {
+        return "user-list";
+    }
 
 
+// 로그인
     @RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String signIn(Model model, @RequestBody HashMap<String, Object> map) throws Exception {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
         System.out.println(map);
-        resultMap = userService.loginService(map);
+        resultMap = userDao.userLogin(map);
         return new Gson().toJson(resultMap);
     }
-    @RequestMapping(value = "/signUp.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+//    회원가입
+    @RequestMapping(value = "/insertUser.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String signUp(Model model, @RequestBody HashMap<String, Object> map) throws Exception {
-        HashMap<String, Object> resultMap = new HashMap<String, Object>();
-        System.out.println(map);
-        resultMap = userService.signUpService(map);
-        return new Gson().toJson(resultMap);
+    public String insertUser(Model model, @RequestBody HashMap<String, Object> map) throws Exception {
+        return new Gson().toJson(userDao.addUser(map));
     }
     @RequestMapping(value = "/idCheck.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String idCheck(Model model, @RequestBody HashMap<String, Object> map) throws Exception {
         HashMap<String, Object> resultMap = new HashMap<String, Object>();
-        resultMap = userService.userCheck(map);
+        resultMap = userDao.userCheck(map);
         System.out.println(map);
         return new Gson().toJson(resultMap);
     }
+    @RequestMapping(value = "/getUserList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String getUserList(Model model, @RequestBody HashMap<String, Object> map) throws Exception {
+        return new Gson().toJson(userDao.getUserList(map));
+    }
+
 
 
 }

@@ -1,5 +1,8 @@
-package com.mySpringServer.myPage.model;
+package com.mySpringServer.myPage.model.entity;
 
+import lombok.Data;
+
+@Data
 public class Board {
     private int boardNo;
     private String title;

@@ -1,7 +1,7 @@
 package com.mySpringServer.myPage.controller;
 
 import com.google.gson.Gson;
-import com.mySpringServer.myPage.dao.BoardService;
+import com.mySpringServer.myPage.dao.board.BoardDao;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class BoardController {
 
     @Autowired
-    BoardService boardservice;
+    BoardDao boardservice;
 
     @RequestMapping("/board-list.do")
     public String boardList(Model model) throws Exception {
@@ -35,12 +35,6 @@ public class BoardController {
     public String boardInsert(Model model) throws Exception {
         return "/board-insert.html";
     }
-    //일단 get메소드 사용을 위해
-//    @GetMapping("/board-view.do")
-//    public String boardView(Model model,@RequestParam HashMap<String, Object> map) throws Exception {
-//        System.out.println(map);
-//        return "/board-view.html";
-//    }
     @PostMapping("/board-view.do")
     public String boardView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception {
         model.addAttribute("initialData",map);
